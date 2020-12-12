@@ -1,0 +1,12 @@
+type User {
+  id: ID! @id
+  email: String! @unique
+  userName: String! @unique
+  firstName: String @default(value:"")
+  lastName: String
+  avatar: String
+  bio: String
+  following: [User!]! @relation(name: "FollowRelation")
+  followers: [User!]! @relation(name: "FollowRelation")
+  loginSecret: String
+}
