@@ -7,7 +7,7 @@ export default {
       const { email, secret } = args;
       const user = await prisma.user({ email });
       if (user.loginSecret === secret) {
-        await prisma.updateUser({ where: { email }, data: { loginSecret: "" } });
+        await prisma.updateUser({ where: { email }, data: { loginSecret: null } });
         return generateToken(user.id);
       } else {
         throw Error("Wrong email/secret conbination");

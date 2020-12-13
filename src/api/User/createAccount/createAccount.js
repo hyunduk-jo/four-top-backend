@@ -15,7 +15,6 @@ export default {
       if (!existUserName && !existEmail) {
         await prisma.createUser({ email, userName, firstName, lastName, avatar });
       }
-      console.log("qwe");
       return true;
     }
   }

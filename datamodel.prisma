@@ -9,4 +9,46 @@ type User {
   following: [User!]! @relation(name: "FollowRelation")
   followers: [User!]! @relation(name: "FollowRelation")
   loginSecret: String
+  likes: [Like!]! @relation(name: "LikesOfUser" onDelete: CASCADE)
+  posts: [Post!]! @relation(name: "PostsOfUser" onDelete: CASCADE)
+  comments: [Comment!]! @relation(name: "CommentsOfUser" onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Post {
+  id: ID! @id
+  title: String!
+  description: String!
+  user: User! @relation(name:"PostsOfUser")
+  files: [File!]! @relation(name:"FilesOfPost" onDelete: CASCADE)
+  likes: [Like!]! @relation(name:"LikesOfPost" onDelete: CASCADE)
+  comments: [Comment!]! @relation(name:"CommentsOfPost" onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type File {
+  id: ID! @id
+  url: String!
+  post: Post! @relation(name:"FilesOfPost")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Like {
+  id: ID! @id
+  user: User! @relation(name:"LikesOfUser")
+  post: Post! @relation(name:"LikesOfPost")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Comment {
+  id: ID! @id
+  text: String!
+  user: User! @relation(name:"CommentsOfUser")
+  post: Post! @relation(name:"CommentsOfPost")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
