@@ -15,6 +15,10 @@ type User {
   createdAt: String!
   updatedAt: String!
   isSelf: Boolean!
+  isFollowing: Boolean!
+  followingCount: Int!
+  followersCount: Int!
+  postsCount: Int!
 }
 
 type Post {
@@ -27,6 +31,9 @@ type Post {
   comments: [Comment!]!
   createdAt: String!
   updatedAt: String!
+  likesCount: Int!
+  commentsCount: Int!
+  isLiked: Boolean!
 }
 
 type File {
