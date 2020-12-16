@@ -19,6 +19,7 @@ type User {
   followingCount: Int!
   followersCount: Int!
   postsCount: Int!
+  myPosts: [Post!]!
 }
 
 type Post {

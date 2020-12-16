@@ -28,6 +28,7 @@ export default {
         console.log(e);
         return false;
       }
-    }
+    },
+    myPosts: ({ id }) => prisma.user({ id }).posts()
   }
 }

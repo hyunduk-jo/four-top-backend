@@ -8,6 +8,7 @@ const s3 = new aws.S3({
   region: "ap-northeast-2"
 })
 
+//Upload Gallery files
 const upload = multer({
   storage: multerS3({
     s3,
@@ -16,7 +17,9 @@ const upload = multer({
       cb(null, { fieldName: file.fieldname });
     },
     key: function (req, file, cb) {
-      cb(null, Date.now().toString())
+      const newFileName = `${file.originalname}_${Date.now().toString()}`;
+      const path = `gallery/${newFileName}`
+      cb(null, path)
     }
   })
 })
@@ -32,4 +35,25 @@ export const uploadController = (req, res) => {
   res.json({ fileArr });
 }
 
-export default upload;
+//Upload avatar image
+const uploadA = multer({
+  storage: multerS3({
+    s3,
+    bucket: 'four-top',
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    },
+    key: function (req, file, cb) {
+      const newFileName = `${Date.now().toString()}_${file.originalname}`;
+      const path = `avatar/${newFileName}`
+      cb(null, path)
+    }
+  })
+})
+
+export const uploadAMiddleware = uploadA.single("avatar");
+
+export const uploadAController = (req, res) => {
+  const { file: { location } } = req;
+  res.json({ location });
+}

@@ -6,8 +6,8 @@ export default {
     files: ({ id }) => prisma.post({ id }).files(),
     comments: ({ id }) => prisma.post({ id }).comments(),
     likes: ({ id }) => prisma.post({ id }).likes(),
-    likesCount: ({ id }) => prisma.likesConnection({ where: { id } }).aggregate().count(),
-    commentsCount: ({ id }) => prisma.commentsConnection({ where: { id } }).aggregate().count(),
+    likesCount: ({ id }) => prisma.likesConnection({ where: { post: { id } } }).aggregate().count(),
+    commentsCount: ({ id }) => prisma.commentsConnection({ where: { post: { id } } }).aggregate().count(),
     isLiked: ({ id }, _, { user }) => {
       return prisma.$exists.like({ AND: [{ post: { id } }, { user: { id: user.id } }] });
     }
